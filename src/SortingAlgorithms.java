@@ -3,13 +3,15 @@ import java.util.Arrays;
 /**
  * Created by AM on 23/02/2017.
  */
-public class SortingAlgorithms {
+class SortingAlgorithms {
+
+
     /**
-     * INSERTION SORT: sorting an array of integers from smaller to larger
-     * @param arr to sort
+     * INSERTION SORT
+     * @param arr array to sort
      * @return sorted array
      */
-    public static int[] insertionSort (int arr[]){
+    int[] insertionSort (int arr[]){
 
         if (arr.length == 1)
             return arr;
@@ -27,8 +29,12 @@ public class SortingAlgorithms {
     }
 
 
-
-    public static int[] bubbleSort (int arr[]){
+    /**
+     * BUBBLE SORT
+     * @param arr array to sort
+     * @return sorted array
+     */
+    int[] bubbleSort (int arr[]){
         if(arr.length == 1)
             return arr;
         int lenArr = arr.length;
@@ -36,10 +42,9 @@ public class SortingAlgorithms {
             int altLenArr = 0;
             for (int i = 1; i < lenArr; i++) {
                 if (arr[i-1] > arr[i]){
-                    int temp1 = arr[i];
-                    int temp2 = arr[i-1];
-                    arr[i-1] = temp1;
-                    arr[i] = temp2;
+                    int temp = arr[i];
+                    arr[i] = arr[i-1];
+                    arr[i-1] = temp;
                     altLenArr = i;
                 }
             }
@@ -48,7 +53,35 @@ public class SortingAlgorithms {
         return arr;
     }
 
-    public static int[] mergeSort (int arr[]){
+
+    int [] quickSort (int arr[], int first, int last){
+        if (first < last){
+            int pivot = pivot(arr,first,last);
+            quickSort(arr,first,pivot-1);
+            quickSort(arr,pivot+1,last);
+        }
+        return arr;
+    }
+
+    int pivot(int arr[], int last, int first){
+
+        int pivot = arr[last];
+        int i = first -1;
+        for (int j = first;j <= last; j++){
+            if (arr[j] <= pivot){
+                i++;
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+        int temp = arr[i+1];
+        arr[i+1] = arr[last];
+        arr[last] = temp;
+        return i+1;
+    }
+
+    int[] mergeSort (int arr[]){
 
         if (arr.length == 1)
             return arr;
@@ -68,13 +101,15 @@ public class SortingAlgorithms {
         leftArr = mergeSort(leftArr);
         rightArr = mergeSort(rightArr);
         return arr;
-
     }
 
 
+
+
     public static void main(String[]args){
+        SortingAlgorithms sa = new SortingAlgorithms();
         int [] a = {5,345,54,2345,2,35,3,5,34,2345,345,4,24,56,68,85,7234,1,4656,7,8,765,3,45,345,};
-        System.out.println(Arrays.toString(bubbleSort(a)));
+        System.out.println(Arrays.toString(sa.quickSort(a,0,a.length-1)));
     }
 }
 
